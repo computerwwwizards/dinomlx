@@ -1,0 +1,47 @@
+@layer global, layout, components, utilities;
+
+@layer global {
+  body {
+    background-color: #191919;
+    color: white;
+    box-sizing: border-box;
+  }
+
+  body * {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+
+  :scope {
+    --g-c-padding: 48px;
+    --g-c-columns: 12;
+  }
+}
+
+@layer layout {
+  .grid-container {
+    --real-columns: calc(var(--g-c-columns) - 2);
+    --lat-pad: ;
+
+    display: grid;
+    grid-template-columns: var(--lat-pad, ) repeat(var(--real-columns), 1fr) var(--lat-pad, );
+
+    column-gap: var(--g-c-gap, 0px);
+  }
+
+  .enhanced-grid {
+    --lat-pad: calc(var(--g-c-padding) - var(--g-c-gap, 0px));
+    --real-columns: var(--g-c-columns)
+  }
+
+  .grid-item {
+    grid-column-end: span var(--g-i-span, 1);
+    grid-column-start: var(--g-i-start, unset);
+  }
+}
