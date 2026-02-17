@@ -1,135 +1,26 @@
 # Design notes
 
-## Grid system
+## CSS Primitives
+See [!](./design-system/index.md)
 
-The grid system is built around two primitives: the **grid container** and the **grid item**.
 
-### Grid Container
 
-The container is where the grid is defined. It MUST allow specifying the number of columns. Its children MUST be aware of the number of columns of the container. The number of columns MUST be overridable inside media queries. The column gap dimension MUST be available in the scope of its children.
+## Layout builder
+We encourage that implementers create a layout builder that maps to some sort of code, for instance a visual drag and drop
+visual builder that creates colored zones, fetauring grid items and grid layouts, also we encourage to create common layout pattern implementations like STACK, BLEED, BOX, etc
 
-All of this is driven by CSS custom properties scoped to the container:
+## CSS
 
-```css
-:scope {
-  --g-c-columns: 8;
-  --g-c-gap: 5px;
-}
+CSS MUST be built around a data source according to the selectors, we refer to this as CANDIDATES, meaning a template can have meta information about what CANDIDATES are being used to avoid duplicating the same CSS. To avoid problems like some candidate means something for some template but the same candidate is different (in the CSS content, it is) in another template, the implementer SHOULD have a central system or a well desigend distributed one that solves as a single source of true the final result for a candidate. We suggest to use ideas like Desing Systems/ UI kits and Design Tokens/Design Hooks.
 
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(var(--g-c-columns), 1fr);
-  column-gap: var(--g-c-gap, 0px);
-}
-```
+Raw CSS as swell is allowed but discouraged to use. Implementers SHOULD try to optimize as much as possible the raw css thoug this process coudl let to high consupmtion of computing resources, for that reason is discouraged, wehreas with a UI kit alike centralized system with multiple layers of cache, the CSS resolution could be speed up.
 
-#### Enhanced grid
+## JS
+In construction
 
-Some pages need lateral padding that is part of the grid itself rather than applied with regular `padding`. To achieve this, `.enhanced-grid` adds two extra tracks at the start and end of the grid that act as padding columns.
+Generally, JS composition SHOULD follow same principles as CSS, like having a set of FUNCTION/CLASSES CANDIDATES that are being used in common in some sort of register and if some of them are not being used, to be three shaked. This arises a real problem with popular libraries, for thata reason we ecourage to use minimal performant libraries composed of otehr small libraries.
 
-The base `.grid-container` already prepares the structure for this by reserving space for `--lat-pad` and subtracting 2 from the column count into `--real-columns`. When `.enhanced-grid` is NOT applied, those values have no effect — the subtraction is there but `.enhanced-grid` is what activates it by setting `--lat-pad` and overriding `--real-columns` back to the full column count.
-
-```css
-.grid-container {
-  --real-columns: calc(var(--g-c-columns) - 2);
-  --lat-pad: ;
-
-  display: grid;
-  grid-template-columns: var(--lat-pad, ) repeat(var(--real-columns), 1fr) var(--lat-pad, );
-  column-gap: var(--g-c-gap, 0px);
-}
-
-/* Opt-in: activates the lateral padding columns */
-.enhanced-grid {
-  --lat-pad: calc(var(--g-c-padding) - var(--g-c-gap, 0px));
-  --real-columns: var(--g-c-columns);
-}
-```
-
-### Grid item
-
-A grid item lets the user specify how many columns it spans and optionally where it starts.
-
-```css
-.grid-item {
-  grid-column-end: span var(--g-i-span, 1);
-  grid-column-start: var(--g-i-start, unset);
-}
-```
-
-<!-- TODO: explore named grid columns so that grid-column-start and span can be declared using names instead of numbers — would make the grid more declarative and easier to reason about in templates -->
-
-### Examples
-
-Base grid with regular padding — no lateral padding columns involved:
-
-```html
-<div class="grid-container" style="padding: 50px">
-  <div>Item 1</div>
-  <div>Item 2</div>
-</div>
-```
-
-Enhanced grid — padding is part of the grid tracks:
-
-```html
-<div class="grid-container enhanced-grid" style="--g-c-padding: 50px">
-  <div class="grid-item" style="--g-i-start: 2">Item 1</div>
-  <div>Item 2</div>
-  <!-- Subgrid: item spans 3 columns and its children inherit the parent grid tracks -->
-  <div class="grid-item" style="display: grid; grid-template-columns: subgrid; --g-i-span: 3">
-    <div>Item a</div>
-    <div class="grid-item" style="--g-i-span: 2; background: red;">Item b</div>
-  </div>
-</div>
-```
-
-Live preview:
-
-```html
-<style>
-  :scope {
-    --g-c-columns: 8;
-    --g-c-gap: 5px;
-  }
-
-  .grid-container {
-    --real-columns: calc(var(--g-c-columns) - 2);
-    --lat-pad: ;
-    display: grid;
-    grid-template-columns: var(--lat-pad, ) repeat(var(--real-columns), 1fr) var(--lat-pad, );
-    column-gap: var(--g-c-gap, 0px);
-  }
-
-  .enhanced-grid {
-    --lat-pad: calc(var(--g-c-padding) - var(--g-c-gap, 0px));
-    --real-columns: var(--g-c-columns);
-  }
-
-  .grid-item {
-    grid-column-end: span var(--g-i-span, 1);
-    grid-column-start: var(--g-i-start, unset);
-  }
-
-  .grid-container > div {
-    background-color: #ff6788;
-  }
-</style>
-
-<div class="grid-container enhanced-grid" style="--g-c-padding: 50px">
-  <div class="grid-item" style="--g-i-start: 2">Item 1</div>
-  <div>Item 2</div>
-  <div class="grid-item" style="display: grid; grid-template-columns: subgrid; --g-i-span: 3">
-    <div>Item a</div>
-    <div class="grid-item" style="--g-i-span: 2; background: red;">Item b</div>
-  </div>
-</div>
-
-<div class="grid-container" style="padding: 50px">
-  <div>Item 1</div>
-  <div>Item 2</div>
-</div>
-```
+The bundle process usually takes place in build time but to avoid redeploying is taht we encourage no t tu use many libraries but our too soon predefined set of utilities.
 
 ## Critical CSS
 
@@ -139,7 +30,9 @@ Critical CSS MUST not have a total size above 4KB.
 
 Critical CSS SHOULD have a total size below 2KB.
 
-Critical CSS is immutable once inlined, so it MUST be content-hashed. This lets the cache know it will never change and does not need to be re-fetched or invalidated.
+Critical CSS MUST be only what affects above the fold
+
+You MUST use a `above-the-fold.html` to put there the tempaltes that MUST be cosnidered fort critical CSS extraction
 
 <!-- TODO: dig into what else critical CSS MUST be — left unfinished, needs revisiting -->
 
@@ -263,66 +156,26 @@ Could be an `xml`, `yml`, or `json` file path that has the same attributes as de
 
 ### Logic components
 
-In progress/design. These are server-side tags that run during template rendering. They have access to `data` (from the transformer) and global variables with `$`.
+In progress/design.
 
-#### Accessing data in templates
-
-Simple object property access uses dot notation:
-
-```html
-<h1>$data.title</h1>
-<p>$data.user.name</p>
-<p>$data.user.email</p>
-```
-
-Arrays are also accessed with dot notation. To get a specific index:
-
-```html
-<p>$data.items.0.label</p>  <!-- "Item A" -->
-<p>$data.items.1.label</p>  <!-- "Item B" -->
-```
-
-Global variables work the same way:
-
-```html
-<p>$page.name</p>
-<p>$env</p>
-<p>$component.id</p>
-```
-
-#### `<if>`
-
-```xml
-<if condition="$data.user.name">
-  <p>Welcome, $data.user.name</p>
+```XML
+<if>
 </if>
 ```
 
-#### `<for>`
-
-Iterates over an array. The `each` attribute points to the array in `data`, and `as` defines the name of the current item inside the loop. Inside the loop body you access the current item with `$item` (or whatever name you gave in `as`):
-
-```xml
-<for each="$data.items" as="item">
-  <div>
-    <span>$item.id</span>
-    <span>$item.label</span>
-  </div>
-</for>
-```
-
-You can also nest loops and mix in global variables:
-
-```xml
-<for each="$data.items" as="item">
-  <div>
-    <span>$item.label</span>
-    <span>$page.name</span>
-  </div>
+```XML
+<for>
 </for>
 ```
 
 ## Architecture
+### Implementation
+We MUST support concurrently or parallel creation of the final HTML. 
+The final HTML MUST be available for streaming into the browser.
+
+Writting the HTML data into the stream MUST allow to be in order and out of order
+
+If the process and result of dome template is out of order and yet not computed, a fallback MUST be inmediatly show for later using js swapping for the real HTML content.
 
 ### Server-side transformer
 
@@ -354,18 +207,9 @@ export default async function(ctx){
       style: ''
     },
     // This data is local to this component's template.
-    // Access it with dot notation inside the template.
+    // Access it with dot notation inside the template, e.g. {{ data.title }}, {{ data.items }}
     data: {
-      title: 'My Page',
-      user: {
-        name: 'John',
-        email: 'john@example.com'
-      },
-      items: [
-        { id: 1, label: 'Item A' },
-        { id: 2, label: 'Item B' },
-        { id: 3, label: 'Item C' }
-      ]
+
     }
   }
 }
@@ -467,3 +311,15 @@ When an event occurs, the runtime resolves logic through three levels. First, a 
 One listener per event type on the root. Capture phase is used with `{ capture: true }` for non-bubbling events like scroll and focus. `data-id` is the primary key to link DOM elements to JS modules.
 
 <!-- TODO: secure fetch — all fetch calls on the client must be scoped and validated. Need to verify that the fetch is coming from the actual runtime and not from an iframe or injected code. Compare against the native fetch to make sure it has not been tampered with. This applies to any network call the framework makes internally. -->
+
+### Localization
+Localization MUST be allowed
+<!-- TODO: in construction  -->
+
+
+### Edge over the wire with progressive enhacment
+
+The idea is to always try to render in the edge if it makes sense, this is not limited to do so,m for instance a big api gateway for some escenarios could be better. Nevertheless the idea is to have the state resumed in the edge and petitions woudl return HTML, and this HTML is used with js to replace some parts of the view. In case a backend is not available
+we strongly suggest that a service worker is the one in charge to create the HTML  so you can reuse your templating logic let's say in web assembly in your worker and the final result is just a string. For the main thrhead is idnferent if you received this from a service worker fetch or a real backend fetch, but the main thread maninly will serve to interact with the DOM.
+
+If a website is actually a SPA, everything will be handled by the worker. If it is progressive enhacend, you can opt out entirling using the worker and gett everything from the backend templating edge.
