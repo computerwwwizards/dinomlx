@@ -55,13 +55,38 @@ The name of the directory will be the name of the candidate
 src/
   candidadates/
     utils/
+      critical.css
+      deferable.css
       util-1/
         critical.css
-        non-critical.css
+        deferable.css
     global/
     layout/
     components/
+      button$/
+        critical.css
+        deferable.css
+        primary/
+          critical.css
+          deferable.css
+        secondary/
+          critical.css
 ```
 
 Each CSS file is optional.
+
+The CSS files that are inmediat to the layer directory like `utils/critical.css` is to define several candidates and the sub-directories like `utils/util-1` are for granular definitions, both are valid, just different wyas to define.
+
+Sub-directories that end in `$` are designed to contain a **semantic field**
+
+```css
+[class^=button]{
+  /* Shared sytles across all buttons */
+}
+```
+
+Sub directories of semantic fields SHOULD create composed names like `button-primary`
+
+
+
 

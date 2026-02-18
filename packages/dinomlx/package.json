@@ -36,6 +36,7 @@
     "@eslint/js": "^9.39.1",
     "@rslib/core": "^0.19.5",
     "@types/node": "^24.10.9",
+    "csstype": "^3.2.3",
     "eslint": "^9.39.1",
     "globals": "^16.5.0",
     "typescript": "^5.9.3",
@@ -48,6 +49,10 @@
     "node-html-parser": "^7.0.2"
   },
   "dependencies": {
+    "@computerwwwizards/dependency-injection": "^1.8.1",
+    "@types/glob": "^9.0.0",
+    "cheerio": "^1.2.0",
+    "glob": "^13.0.5",
     "lightningcss": "^1.31.1",
     "postcss": "^8.5.6"
   }
