@@ -1,53 +1,69 @@
 #!/usr/bin/env node
 
-import { Command } from 'commander';
-import { resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { createContainer } from './di';
-import type { BuildOptions } from './types';
 
-const program = new Command();
+import { type ReadStream } from "node:fs";
+import { Readable } from "node:stream";
 
-program
-  .name('dinomlx')
-  .description('DinoMLX SSG CLI')
-  .version('1.0.0');
+import type {  Properties }  from 'csstype'
 
-program
-  .command('build')
-  .description('Build the static site')
-  .option('--out-dir <path>', 'Output directory', 'dist')
-  .option('--cache-dir <path>', 'Cache directory', '.dinomlx/cache')
-  .option('--base-path <path>', 'Base path for assets', '')
-  .option('--src-root <path>', 'Source root directory', 'src')
-  .option('--no-minify', 'Disable minification')
-  .action(async (options) => {
-    try {
-      const buildOptions: BuildOptions = {
-        outDir: resolve(process.cwd(), options.outDir),
-        cacheDir: resolve(process.cwd(), options.cacheDir),
-        basePath: options.basePath,
-        srcRoot: resolve(process.cwd(), options.srcRoot),
-        minify: options.minify
-      };
+interface CreateHashOptions{
+  componentName: string;
+  customAttributes?: Record<string, string>;
+  spreadAttributes?: Record<string, string>;
+  slot?: string; 
+}
+interface HASHCreator{
+  createHash(options: CreateHashOptions):Promise<string>
+}
 
-      console.log('Starting build...');
-      const container = createContainer(buildOptions);
-      const builder = container.get('builder');
 
-      await builder.build();
-    } catch (error) {
-      console.error('Build failed:', error);
-      process.exit(1);
-    }
-  });
+interface HTMLParser{
+  createHashFromStream(stream: ReadStream): Promise<string>;
+  createHashFromString(string: string): Promise<string>;
+}
 
-export const run = () => program.parse(process.argv);
 
-// Only run if executed directly
-const currentFile = fileURLToPath(import.meta.url);
-const isMain = process.argv[1] === currentFile;
+interface HTMLTemplateCompiler{
+  from(src: string): this;
+  forceStartTransfrom(): this;
+  saveTo(target: string): this;
+  compile(): Promise<void>
+  onFinishTransfrom(cb: (transformed: string)=>void): this;
+  getTransformed(): Promise<string>
+}
 
-if (isMain) {
-  run();
+type RenderMode = 'promise' | 'generator' | 'readable'
+interface Renderer{
+  from(src: string): this;
+  saveTo(target: string): this;
+  render<T extends RenderMode = 'generator'>(mode: T): T extends 'promise' ? Promise<string> : T extends 'readable'? Readable : AsyncGenerator<string, string>
+}
+
+type CSSRegisterOptions = {
+  raw?: {
+    critical?: string;
+    deferable?: string
+  };
+} & { 
+  critical?: Record<string, Properties>;
+  derable?:Record<string, Properties>;
+}
+
+// There is a topic about versions missing here
+interface CSSRegister{
+  register(candidateName: string, options: CSSRegisterOptions):this;
+  save(): Promise<void>;
+}
+
+interface CSSRegisterLayer{
+  utils: CSSRegister & this;
+  components: CSSRegister & this;
+  layout: CSSRegister & this;
+  global: CSSRegister & this;
+  save(): Promise<void>;
+}
+
+type CSSMode = 'both' | 'deferable' | 'critical'
+interface CSSGenerator{
+  getPromiseByCandidates<T extends CSSMode = 'both'>(set: Set<string>, mode?: T): Promise< T extends 'critical'? {critical: string}: T extends 'both' ?{critical: string; deferable: string} : {deferable: string}>;
 }
