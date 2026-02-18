@@ -45,13 +45,13 @@
   },
   "private": true,
   "peerDependencies": {
-    "commander": "^14.0.3",
     "node-html-parser": "^7.0.2"
   },
   "dependencies": {
     "@computerwwwizards/dependency-injection": "^1.8.1",
     "@types/glob": "^9.0.0",
     "cheerio": "^1.2.0",
+    "commander": "^14.0.3",
     "glob": "^13.0.5",
     "lightningcss": "^1.31.1",
     "postcss": "^8.5.6"
