@@ -1,7 +1,9 @@
 import { expect, test } from 'vitest';
-import { squared } from '../src/index';
+import { NodeCryptoHashCreator } from '../src/services/hash-creator';
 
-test('squared', () => {
-  expect(squared(2)).toBe(4);
-  expect(squared(12)).toBe(144);
+test('NodeCryptoHashCreator creates consistent hash', async () => {
+  const creator = new NodeCryptoHashCreator();
+  const hash1 = await creator.createHash({ componentName: 'test' });
+  const hash2 = await creator.createHash({ componentName: 'test' });
+  expect(hash1).toBe(hash2);
 });
