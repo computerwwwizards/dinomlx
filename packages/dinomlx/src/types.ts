@@ -51,6 +51,7 @@ export type CSSRegisterOptions = {
 export interface CSSRegister{
   register(candidateName: string, options: CSSRegisterOptions):this;
   save(): Promise<void>;
+  load(): Promise<void>; // Added load method
 }
 
 export interface CSSRegisterLayer{
