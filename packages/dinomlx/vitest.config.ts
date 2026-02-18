@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  // Configure Vitest (https://vitest.dev/config/)
-  test: {},
+  test: {
+    include: ['src/**/*.test.ts', 'tests/**/*.test.ts'],
+  },
 });
