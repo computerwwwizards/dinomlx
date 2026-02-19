@@ -52,12 +52,14 @@ The Page IR represents a fully resolved page, including its component tree, data
 ### Fields
 
 *   **`data`**: A map of component instances identified by a unique hash (e.g., `hash_index`).
-    *   **`slots`**: Contains the HTML content for each slot. This HTML may contain references to other components (`$#{hash_...}`) or localization keys (`$i18n#{hash_...}`).
+    *   **`slots`**: Contains the HTML content for each slot. This HTML may contain **placeholders** referencing other components or data.
+        *   **`$#{hash_component}`**: A reference to another component instance in the `data` map. The compiler replaces this with the rendered HTML of that component.
+        *   **`$i18n#{hash_key}`**: A reference to a localized string in the `i18n` map. The compiler replaces this with the string corresponding to the current language.
     *   **`attributes`**: Standard HTML attributes for the component root.
     *   **`custom_attributes`**: Framework-specific attributes (starting with `_c_`).
 *   **`i18n`**: A dictionary of localized strings used in the page.
-    *   Keys are hashes (e.g., `hash_title`).
-    *   Values are objects mapping language codes to strings.
+    *   **Keys**: Unique hashes generated from the localization key (e.g., `hash_title`).
+    *   **Values**: Objects mapping language codes (inferred from `<i-lang>` tags) to strings.
 *   **`above_the_fold`**: Critical for CSS optimization.
     *   **`own_candidates`**: CSS candidates used directly by the page template.
     *   **`external_refs`**: References to components that are visible above the fold. The compiler traces these references to extract their Critical CSS.
@@ -92,7 +94,7 @@ The raw HTML of the component, often with placeholders for slots or dynamic cont
 
 The IR serves as the contract between the parsing phase and the code generation phase.
 
-1.  **Parsing**: Source files are parsed to identify components, candidates, and dynamic content.
-2.  **Resolution**: References are resolved to hashes.
+1.  **Parsing & Inference**: Source files are parsed. Localization keys and values are **inferred** from `<i18n-*>` tags. Component references are resolved.
+2.  **Resolution**: References are resolved to unique hashes.
 3.  **Optimization**: The `above_the_fold` data is calculated to determine which CSS is critical.
-4.  **Generation**: The final HTML is constructed by replacing hashes with actual content and injecting the critical CSS.
+4.  **Generation**: The final HTML is constructed by replacing hashes (`$#{...}`, `$i18n#{...}`) with actual content and injecting the critical CSS.

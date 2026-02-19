@@ -16,26 +16,34 @@ Responsible for reading the source files (`.html`, `.css`) and transforming them
 - **HTML Parsing**: Uses `cheerio` (with `xmlMode: true`) to parse HTML templates and components.
 - **Candidate Extraction**: Identifies CSS class names (candidates) used in templates.
 
-### 2. Dependency Graph
+### 2. Candidates Registry (In-Memory DB)
+A critical component for the Static Site Generation (SSG) process. It acts as the single source of truth for all CSS styles.
+
+- **Initialization**: On startup, it scans the `src/candidates` directory.
+- **Storage**: Loads all CSS candidate definitions into an optimized **in-memory JSON map**.
+- **Resolution**: Serves request from the compiler to resolve a candidate name (e.g., `button-primary`) to its actual CSS rules.
+- **Performance**: Provides O(1) lookups for style generation, significantly speeding up the build process compared to repeated file I/O.
+
+### 3. Dependency Graph
 Manages the relationships between components, templates, and candidates.
 
 - **Component Resolution**: Maps component tags (e.g., `<c-navbar>`) to their source files.
 - **Transitive Dependencies**: Tracks which components use other components.
 
-### 3. IR Generator
+### 4. IR Generator
 Transforms the parsed ASTs and dependency graph into the [Intermediate Representation (IR)](./intermediate-representation.md).
 
 - **Slot Processing**: Handles content distribution into slots.
 - **Hash Generation**: Assigns unique hashes to component instances based on content and props.
 
-### 4. Critical CSS Engine
+### 5. Critical CSS Engine
 Analyzes the IR to determine the Critical CSS for each page.
 
 - **Above-the-Fold Logic**: Identifies components visible in the initial viewport.
-- **Candidate Tracing**: Collects all CSS rules required by the critical path.
+- **Candidate Tracing**: Queries the **Candidates Registry** to collect all CSS rules required by the critical path.
 - **Budget Enforcement**: Ensures the inlined CSS stays within the performance budget (default 2KB).
 
-### 5. Code Generator (Synthesizer)
+### 6. Code Generator (Synthesizer)
 Takes the optimized IR and generates the final output files.
 
 - **HTML Stitching**: Replaces hashes with actual content.
@@ -48,10 +56,12 @@ Takes the optimized IR and generates the final output files.
 graph TD
     Source[Source Files] --> Parser
     Parser --> AST[AST]
+    Parser --> Registry[Candidates Registry (In-Memory)]
     AST --> Resolver[Dependency Resolver]
     Resolver --> IRGen[IR Generator]
     IRGen --> IR[Intermediate Representation]
     IR --> Analyzer[Critical CSS Analyzer]
+    Analyzer --> Registry
     Analyzer --> CodeGen[Code Generator]
     CodeGen --> Output[Dist Folder]
 ```

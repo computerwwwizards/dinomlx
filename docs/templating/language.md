@@ -13,14 +13,52 @@ Custom components MUST start with a `c-` prefix.
 <c-button>Click me</c-button>
 ```
 
+#### Component Resolution (Subdirectories)
+When resolving components from subdirectories, directory separators (`/`) are replaced by underscores (`_`) in the tag name.
+
+**Example:**
+*   Source: `src/templates/atoms/button-primary.html`
+*   Usage: `<c-atoms_button-primary>`
+
 #### Reserved Names
 *   `c-tag`: Generic custom tag.
-*   `c-slot`: Slot placeholder.
+*   `c-slot`: Default slot placeholder.
 *   `c-slot-[name]`: Named slot.
 *   `c-above-the-fold`: Marks content as critical for initial render.
 *   `g-deferable-css-external`: Global directive for deferable CSS link injection.
 *   `g-critical-css`: Global directive for Critical CSS injection.
-*   `i18n`: Directive for localization.
+
+### Slots
+
+DINOMLX supports both default and named slots for passing content into components.
+
+#### Default Slot
+Pass content directly inside the component tag.
+
+```html
+<!-- Parent -->
+<c-card>This is the default content</c-card>
+
+<!-- Component (c-card) -->
+<div class="card">
+  <c-slot />
+</div>
+```
+
+#### Named Slots
+Use `<c-slot-[name]>` to target specific areas in the component.
+
+```html
+<!-- Parent -->
+<c-layout>
+  <c-slot-header>
+    <h1>Page Title</h1>
+  </c-slot-header>
+  <c-slot-content>
+    <p>Main body content.</p>
+  </c-slot-content>
+</c-layout>
+```
 
 ### Attributes
 
@@ -30,10 +68,28 @@ Framework-specific attributes MUST start with `_c_`.
 *   `_c_template-src`: Path to the template source.
 *   `_c_version`: Semantic version of the component.
 
-Example:
+#### Spread Attributes
+You can spread properties into a component or element using the spread syntax (implementation detail may vary, typically passed via transformer context).
+
 ```html
-<c-tag _c_name="custom-tag-name" _c_version="1.0.0" />
+<!-- Example of concept -->
+<div {{ ...attributes }}></div>
 ```
+
+### Internalization (i18n)
+
+Localization is handled via dedicated tags that the compiler identifies and extracts.
+
+```html
+<i18n-welcome-message>
+  <i-english>Welcome!</i-english>
+  <i-spanish>¡Bienvenido!</i-spanish>
+</i18n-welcome-message>
+```
+
+The compiler infers:
+*   `welcome-message` as the localization key.
+*   `english` and `spanish` as the language codes.
 
 ### Variables
 
@@ -78,10 +134,3 @@ Render content conditionally.
   <div class="warning">Warning!</div>
 </if>
 ```
-
-## Roadmap
-
-- [ ] Named slots support
-- [ ] `<c-above-the-fold />` full implementation
-- [ ] `elif` / `else` for conditionals
-- [ ] Improved module resolution (e.g., `template-name.html` vs `template/name.html`)
