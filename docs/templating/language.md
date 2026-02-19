@@ -68,7 +68,21 @@ All custom attributes MUST start with `_c_` prefix
 
 `_c_version`: OPTIONAL. MUST be any semantic version.
 
+## Variables
 
+Can be used inside with leading `$`
+
+Example:
+
+```html
+<html lang="$global.lang"></html>
+```
+
+### `$global`
+
+Reserved globals
+
+- `$global.lang`
 
 ## Roadmap
 
