@@ -91,16 +91,30 @@ The compiler infers:
 *   `welcome-message` as the localization key.
 *   `english` and `spanish` as the language codes.
 
-### Variables
+### Data & Variables
 
-Variables are interpolated using `{{ }}` syntax or referenced in attributes with a leading `$`.
+DINOMLX uses a consistent tag-based syntax for outputting dynamic data and a dollar-sign syntax for attribute interpolation. **Mustache syntax (`{{ }}`) is NOT used.**
+
+#### Text Interpolation (`<d-[variable] />`)
+To output the value of a variable into the text content, use the `<d-[variable] />` tag, where `d` stands for "data".
 
 ```html
-<div class="{{ data.className }}">
-  {{ data.title }}
+<!-- Renders the value of 'data.title' -->
+<h1><d-data.title /></h1>
+
+<!-- Renders nested properties -->
+<p>User: <d-user.name /></p>
+```
+
+#### Attribute Interpolation (`$variable`)
+To bind a variable to an attribute, use the `$` prefix within the attribute string.
+
+```html
+<div class="$data.className" id="$data.id">
+  Content
 </div>
 
-<html lang="$global.lang">
+<a href="$item.url">Link</a>
 ```
 
 ### Global Variables (`$`)
@@ -121,7 +135,7 @@ Iterate over collections or ranges.
 
 ```html
 <for items="$data.items" as="item">
-  <li>{{ item.name }}</li>
+  <li><d-item.name /></li>
 </for>
 ```
 

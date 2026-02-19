@@ -18,7 +18,7 @@ Iterates over a collection and renders its children for each item.
 
 ```html
 <for items="$data.items" as="item">
-  <li>{{ item.name }}</li>
+  <li><d-item.name /></li>
 </for>
 ```
 
@@ -28,6 +28,6 @@ Repeats content a specified number of times.
 
 ```html
 <loop count="5" index="i">
-  <div>Item {{ i }}</div>
+  <div>Item <d-i /></div>
 </loop>
 ```
