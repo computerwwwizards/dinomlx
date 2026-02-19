@@ -14,7 +14,15 @@ Custom components MUST start with a `c-` prefix, after that follow the name of t
 </div>
 ```
 
-There is one reserved case: `c-tag`
+There are reserved cases: 
+- `c-tag`
+- `c-slot`
+- `c-slot-name`
+- `c-above-the-fold`
+- `g-deferable-css-external`
+- `g-critical-css`
+
+### c-tag
 
 This is for another way to declare custom tags, but if use this form it MUST have an attribute called `_c_name`
 
@@ -63,8 +71,12 @@ All custom attributes MUST start with `_c_` prefix
 ## Roadmap
 
 - [ ] Add support for `slots`
+- [ ] Add suport for named slots
+- [ ] Add support for `<c-above-the-fold />`
 - [ ] Add support for `for  of` and `loop`
 - [ ] Add support for `if`, `else`, `elif`
 - [ ] Expand explanation of the custom attributes
 - [ ] Add suport for inline `if else`
-
+- [ ] Add better resolution for `tempalte-name.html` vs `template/name.html`
+- [ ] Add way to diferntiate bettwen using the `c-slot` vs defining it !urgent
+- [ ] Add way to repsent what candidates are above the fold for specif pages paths
