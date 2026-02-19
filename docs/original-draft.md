@@ -116,7 +116,7 @@ export default function(runtime){
     eventBus,
     // usually here we pass configuration, globals and IoC container
     // event bus MUST be merged with IoC
-    // TODO: find a way to have event bus and IoC as child containers rather than using a global but this 
+    // TODO: find a way to have event bus and IoC as child containers rather than using a global but this
     // should be configurable
     ctx
   } = runtime;
@@ -170,7 +170,7 @@ In progress/design.
 
 ## Architecture
 ### Implementation
-We MUST support concurrently or parallel creation of the final HTML. 
+We MUST support concurrently or parallel creation of the final HTML.
 The final HTML MUST be available for streaming into the browser.
 
 Writting the HTML data into the stream MUST allow to be in order and out of order

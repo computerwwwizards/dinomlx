@@ -1,37 +1,40 @@
 # DINOMLX SSG CLI
 
-Build CLI for Static Site Generation
+Build CLI for Static Site Generation with DINOMLX
 
-**Important**: In this first unstable implementation we do not support nested inclusions
+## Overview
 
-## Build
+The DINOMLX CLI is the main tool for building your static site. It handles:
+- **Parsing**: Reads your HTML templates and CSS candidates.
+- **Compilation**: Generates an Intermediate Representation (IR).
+- **Optimization**: Extracts Critical CSS and defers the rest.
+- **Output**: Produces optimized static assets ready for deployment.
 
-Basic
+**Note**: This is an experimental release. Expect rapid changes.
+
+## Build Command
 
 ```bash
-dinomlx build 
+dinomlx build
 ```
 
-|option|default|description|
-|---|---|---|
-|--out-dir|$pwd/dist|The directory for the final generated static assets|
-|--cache-dir|$pwd/.dinomlx/cache/|Directory for cache compilation data|
-|--base-path||A path to prefix the assets, in case you are deploying into path as teh root of the web site, exmple: "/my-blog"|
-|--src-root|$pwd/src/|Path to the src files|
-|--minify|true|Sets if the final code is minfied|
+| Option        | Default              | Description                                      |
+| :------------ | :------------------- | :----------------------------------------------- |
+| `--out-dir`   | `$pwd/dist`          | Output directory for generated assets            |
+| `--cache-dir` | `$pwd/.dinomlx/cache/` | Directory for cache compilation data             |
+| `--base-path` |                      | URL prefix for assets (e.g., `/my-blog`)         |
+| `--src-root`  | `$pwd/src/`          | Path to source files                             |
+| `--minify`    | `true`               | Whether to minify the output code                |
 
+## Implementation Details
 
-## Implementation details
+### XML Parsers
+We currently use `cheerio` (XML mode) to parse custom components and query the DOM during compilation.
 
-### XML parsers
+### Hashing (SHA)
+Node.js native crypto is used to generate SHA-256 hashes for components, enabling efficient caching and cache invalidation.
 
-We are going to use XML parsers (at least in this iteration) to query  the custom components. In this case cheerio
+### Architecture Patterns
+The system lacks clear boundaries and APIs in some areas. Treat this as a Proof of Concept (PoC).
 
-### SHA
-
-We are going to use **Node.js** native crypto to create the hashes based on the name, attributes and slot
-
-### Patterns
-
-Rigth now we lack of clear boundaries and APIS, treat this as an experimental release or even a proof of concept
-
+See [Compiler Architecture](../../docs/compiler/architecture.md) for a deeper dive.
