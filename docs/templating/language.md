@@ -17,10 +17,12 @@ Custom components MUST start with a `c-` prefix, after that follow the name of t
 There are reserved cases: 
 - `c-tag`
 - `c-slot`
-- `c-slot-name`
+- `c-slot-[name]`
 - `c-above-the-fold`
 - `g-deferable-css-external`
 - `g-critical-css`
+- `i18n`
+- `i18n-[name]`
 
 ### c-tag
 

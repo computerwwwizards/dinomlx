@@ -1,5 +1,5 @@
 # Columns
-
+<!-- TODO: add patterns using fractions adn thee reason why items shoudl have acces to the variable to make calcs -->
 ## Problem
 
 In modern web development, column systems are common in design tools. They provide standardized boundaries for how much space an item can occupy without fixing its width. Translating this way of thinking into CSS has historically been awkward and often required clever hacks (for example, early Bootstrap grid systems). Modern CSS Grid has largely solved the mechanics of column layouts.
