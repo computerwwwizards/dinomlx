@@ -3,7 +3,7 @@
     "hash_index": {
       "slots": {
         "head": "<title>My example</title>",
-        "body": "#hash_index_navbar<h1>This is a nested page</h1>"
+        "body": "$#{hash_index_navbar}<h1>This is a nested page</h1>"
       },
       "attributes": {},
       "custom_attributes": {}
@@ -11,6 +11,6 @@
   },
   "above_the_fold": {
     "own_candidates": [],
-    "external_refs": ["$#hash_index_navbar"]
+    "external_refs": ["$#{hash_index_navbar}"]
   }
 }

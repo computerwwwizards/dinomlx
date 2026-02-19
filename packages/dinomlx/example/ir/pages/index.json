@@ -2,13 +2,12 @@
   "data":{
     "hash_index": {
       "slots": {
-        "head": "<title>Home</title>",
-        "body": "$#hash_index_navbar<h1>This is the home</h1>$#hash_atoms_primary_button"
+        "head": "<title>$i18n#{hash_title}</title>",
+        "body": "$#{hash_index_navbar}<h1>This is the home</h1>$#{hash_atoms_primary_button}$i18n#{hash_click}"
       },
       "attributes": {},
       "custom_attributes": {}
     },
-
     "hash_atoms_primary_button":{
       "attributes": {
         "id": "click-me"
@@ -19,8 +18,18 @@
       "custom_attributes": {}
     }
   },
+  "i18n": {
+    "hash_title": {
+      "spanish": "Principal",
+      "english": "Home"
+    },
+    "hash_click": {
+      "spanish": "Hazme Click",
+      "english": "Click me again"
+    }
+  },
   "above_the_fold": {
     "own_candidates": [],
-    "external_refs": "$#hash_index_navbar"
+    "external_refs": "$#{hash_index_navbar}"
   }
 }
