@@ -27,6 +27,9 @@ When resolving components from subdirectories, directory separators (`/`) are re
 *   `c-above-the-fold`: Marks content as critical for initial render.
 *   `g-deferable-css-external`: Global directive for deferable CSS link injection.
 *   `g-critical-css`: Global directive for Critical CSS injection.
+*   `i18n`: Directive for localization.
+*   `i18n-[name]`: Localization key container.
+*   `i-[lang]`: Localization language content.
 
 ### Slots
 
@@ -69,11 +72,11 @@ Framework-specific attributes MUST start with `_c_`.
 *   `_c_version`: Semantic version of the component.
 
 #### Spread Attributes
-You can spread properties into a component or element using the spread syntax (implementation detail may vary, typically passed via transformer context).
+Properties can be spread into a component or element automatically by the transformer context. Unlike custom attributes, this happens without explicit syntax in the template.
 
 ```html
-<!-- Example of concept -->
-<div {{ ...attributes }}></div>
+<!-- Attributes passed to the component context are automatically applied -->
+<div class="my-component"></div>
 ```
 
 ### Internalization (i18n)
@@ -148,3 +151,16 @@ Render content conditionally.
   <div class="warning">Warning!</div>
 </if>
 ```
+
+## Roadmap
+
+- [ ] Add support for `slots`
+- [ ] Add suport for named slots
+- [ ] Add support for `<c-above-the-fold />`
+- [ ] Add support for `for  of` and `loop`
+- [ ] Add support for `if`, `else`, `elif`
+- [ ] Expand explanation of the custom attributes
+- [ ] Add suport for inline `if else`
+- [ ] Add better resolution for `tempalte-name.html` vs `template/name.html`
+- [ ] Add way to diferntiate bettwen using the `c-slot` vs defining it !urgent
+- [ ] Add way to repsent what candidates are above the fold for specif pages paths

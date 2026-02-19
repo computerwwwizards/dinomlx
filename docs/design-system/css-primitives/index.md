@@ -12,6 +12,10 @@ DINOMLX encourages using a set of layout primitives to handle structure and spac
 
 The following primitives are part of the design specification and will be available in future releases:
 
+- 🚧 [Stack](#stack)
+- 🚧 [Box](#box)
+- 🚧 [Grid](#grid)
+
 ### Stack
 A vertical or horizontal stack of elements with consistent spacing.
 - **Use case**: Lists, form groups, card content.
