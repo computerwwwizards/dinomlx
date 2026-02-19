@@ -1,98 +1,87 @@
-# Templating language (DINOMLX)
+# Templating Language (DINOMLX)
 
 ## Syntax
 
-- Any valid HTML is admited
+DINOMLX templates are based on valid HTML5, extended with custom components, directives, and variable interpolation.
 
+### Custom Components
 
-## Reserved prefix
-Custom components MUST start with a `c-` prefix, after that follow the name of the tag
-
-```xml
-<div>
-  <c-custom-tag-name />
-</div>
-```
-
-There are reserved cases: 
-- `c-tag`
-- `c-slot`
-- `c-slot-[name]`
-- `c-above-the-fold`
-- `g-deferable-css-external`
-- `g-critical-css`
-- `i18n`
-- `i18n-[name]`
-
-### c-tag
-
-This is for another way to declare custom tags, but if use this form it MUST have an attribute called `_c_name`
-
-```xml
-<c-tag _c_name="custom-tag-name" />
-```
-
-### Example
-We can have
-
-```xml
-<!-- navbar.html -->
-<navbar >
-  <a href="/path1">
-    content 1
-  </a>
-  <a href="/path2">
-    content 2
-  </a>
-  <a href="/path3">
-    content 3
-  </a>
-</navbar>
-
-```
-And used like this
-
-```xml
-<c-navbar />
-```
-
-## Atttibutes
-
-All custom attributes MUST start with `_c_` prefix
-
-### Reserved attributes
-
-`_c_name`: In case using `<c-tag />` is a MUST to use an attribute `_c_name` to let the compiler/engine the name of the custom component.
-
-`_c_template-source`: OPTIONAL. It MAY be either a fully qualified URL or a path (relative or absolute) for using the localfile system or a global variable that has as value one of the two stated before. If no source is stated for the template, there MUST be some data resolver that uses the component name to internally decide where to get the information.
-
-`_c_version`: OPTIONAL. MUST be any semantic version.
-
-## Variables
-
-Can be used inside with leading `$`
-
-Example:
+Custom components MUST start with a `c-` prefix.
 
 ```html
-<html lang="$global.lang"></html>
+<c-navbar />
+<c-button>Click me</c-button>
 ```
 
-### `$global`
+#### Reserved Names
+*   `c-tag`: Generic custom tag.
+*   `c-slot`: Slot placeholder.
+*   `c-slot-[name]`: Named slot.
+*   `c-above-the-fold`: Marks content as critical for initial render.
+*   `g-deferable-css-external`: Global directive for deferable CSS link injection.
+*   `g-critical-css`: Global directive for Critical CSS injection.
+*   `i18n`: Directive for localization.
 
-Reserved globals
+### Attributes
 
-- `$global.lang`
+Framework-specific attributes MUST start with `_c_`.
+
+*   `_c_name`: Required when using `<c-tag>` to specify the component name.
+*   `_c_template-src`: Path to the template source.
+*   `_c_version`: Semantic version of the component.
+
+Example:
+```html
+<c-tag _c_name="custom-tag-name" _c_version="1.0.0" />
+```
+
+### Variables
+
+Variables are interpolated using `{{ }}` syntax or referenced in attributes with a leading `$`.
+
+```html
+<div class="{{ data.className }}">
+  {{ data.title }}
+</div>
+
+<html lang="$global.lang">
+```
+
+### Global Variables (`$`)
+
+*   `$global.lang`: Current language code.
+*   `$root`: Application root path.
+*   `$cwd`: Current working directory.
+*   `$page`: Current page metadata (`id`, `name`).
+*   `$component`: Current component metadata (`id`, `name`).
+*   `$env`: Environment (e.g., `production`).
+*   `$config`: Application configuration (client-safe subset).
+
+## Directives
+
+### Loops (`<for>`, `<loop>`)
+
+Iterate over collections or ranges.
+
+```html
+<for items="$data.items" as="item">
+  <li>{{ item.name }}</li>
+</for>
+```
+
+### Conditionals (`<if>`)
+
+Render content conditionally.
+
+```html
+<if condition="$data.showWarning">
+  <div class="warning">Warning!</div>
+</if>
+```
 
 ## Roadmap
 
-- [ ] Add support for `slots`
-- [ ] Add suport for named slots
-- [ ] Add support for `<c-above-the-fold />`
-- [ ] Add support for `for  of` and `loop`
-- [ ] Add support for `if`, `else`, `elif`
-- [ ] Expand explanation of the custom attributes
-- [ ] Add suport for inline `if else`
-- [ ] Add better resolution for `tempalte-name.html` vs `template/name.html`
-- [ ] Add way to diferntiate bettwen using the `c-slot` vs defining it !urgent
-- [ ] Add way to repsent what candidates are above the fold for specif pages paths
+- [ ] Named slots support
+- [ ] `<c-above-the-fold />` full implementation
+- [ ] `elif` / `else` for conditionals
+- [ ] Improved module resolution (e.g., `template-name.html` vs `template/name.html`)
