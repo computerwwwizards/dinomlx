@@ -4,7 +4,8 @@
 import { type ReadStream } from "node:fs";
 import { Readable } from "node:stream";
 
-import type {  Properties }  from 'csstype'
+import { CSSRegisterLayerImpl } from './css-register';
+export { CSSRegisterLayerImpl, type CSSRegister, type CSSRegisterLayer, type CSSRegisterOptions } from './css-register';
 
 interface CreateHashOptions{
   componentName: string;
@@ -37,30 +38,6 @@ interface Renderer{
   from(src: string): this;
   saveTo(target: string): this;
   render<T extends RenderMode = 'generator'>(mode: T): T extends 'promise' ? Promise<string> : T extends 'readable'? Readable : AsyncGenerator<string, string>
-}
-
-type CSSRegisterOptions = {
-  raw?: {
-    critical?: string;
-    deferable?: string
-  };
-} & { 
-  critical?: Record<string, Properties>;
-  derable?:Record<string, Properties>;
-}
-
-// There is a topic about versions missing here
-interface CSSRegister{
-  register(candidateName: string, options: CSSRegisterOptions):this;
-  save(): Promise<void>;
-}
-
-interface CSSRegisterLayer{
-  utils: CSSRegister & this;
-  components: CSSRegister & this;
-  layout: CSSRegister & this;
-  global: CSSRegister & this;
-  save(): Promise<void>;
 }
 
 type CSSMode = 'both' | 'deferable' | 'critical'
