@@ -1,4 +1,4 @@
-[class^="button"]{
+[class^="button"] {
   background-color: var(--button-bg);
   color: var(--button-fg);
   padding-inline: 12px;

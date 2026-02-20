@@ -1,0 +1,26 @@
+{
+  "data": {
+    "hash_3e5a79494da7384647f2c41d535501fbafe420c72a919c0c76dd853b20369c84": {
+      "componentName": "navbar",
+      "slots": {},
+      "attributes": {},
+      "custom_attributes": {}
+    },
+    "hash_index_088a3e8e5024de815b962d1ed646ab9c2a0463749afb711afb2323262910ec89": {
+      "componentName": "page",
+      "slots": {
+        "body": "$#{hash_3e5a79494da7384647f2c41d535501fbafe420c72a919c0c76dd853b20369c84}\n<h1>This is the home</h1>"
+      },
+      "attributes": {},
+      "custom_attributes": {}
+    }
+  },
+  "i18n": {},
+  "above_the_fold": {
+    "own_candidates": [
+      "flex",
+      "button-primary"
+    ],
+    "external_refs": []
+  }
+}

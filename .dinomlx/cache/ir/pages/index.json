@@ -1,0 +1,47 @@
+{
+  "data": {
+    "hash_335b8330fb363c35f536067b4cfcd6d1f679728869f4d90463c20b77df1c8018": {
+      "componentName": "atoms_button-primary",
+      "slots": {
+        "default": "\n      Click Me\n    "
+      },
+      "attributes": {
+        "id": "click-me"
+      },
+      "custom_attributes": {}
+    },
+    "hash_3786fe796238292c5feda7dda3ab86fa591c5e910252f4c2d5ecad5f54c8a436": {
+      "componentName": "basic-layout",
+      "slots": {
+        "head": "\n    <title>\n      $i18n#{hash_688dcdd7b7a454d78aa98f6fca1892c25ccba85646214cb4e747bed550fc987f}\n    </title>\n  ",
+        "body": "\n    <c-above-the-fold/>\n    $#{hash_335b8330fb363c35f536067b4cfcd6d1f679728869f4d90463c20b77df1c8018}\n    $i18n#{hash_70eec08bced8e59aff90b867d9050da58119f9bd0e7e51ca5fa3e102b4b58974}\n  "
+      },
+      "attributes": {},
+      "custom_attributes": {}
+    },
+    "hash_index_e999b0ef7da8a997ba08d6eb806e91c6e2e187ad7136b3d1932475f2fe2b90b3": {
+      "componentName": "page",
+      "slots": {
+        "body": "$#{hash_3786fe796238292c5feda7dda3ab86fa591c5e910252f4c2d5ecad5f54c8a436}\n"
+      },
+      "attributes": {},
+      "custom_attributes": {}
+    }
+  },
+  "i18n": {
+    "hash_688dcdd7b7a454d78aa98f6fca1892c25ccba85646214cb4e747bed550fc987f": {
+      "spanish": "\n          Principal\n        ",
+      "english": "\n          Home\n        "
+    },
+    "hash_70eec08bced8e59aff90b867d9050da58119f9bd0e7e51ca5fa3e102b4b58974": {
+      "spanish": "\n        Hazme Click\n      ",
+      "english": "\n        Click me again\n      "
+    }
+  },
+  "above_the_fold": {
+    "own_candidates": [
+      "button-primary"
+    ],
+    "external_refs": []
+  }
+}

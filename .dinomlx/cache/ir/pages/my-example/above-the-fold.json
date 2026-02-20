@@ -1,0 +1,26 @@
+{
+  "data": {
+    "hash_3e5a79494da7384647f2c41d535501fbafe420c72a919c0c76dd853b20369c84": {
+      "componentName": "navbar",
+      "slots": {},
+      "attributes": {},
+      "custom_attributes": {}
+    },
+    "hash_index_9ff8fa3213d06f5f876100b94164b905ce07cea6d02d7084b5741f9218a2ac0a": {
+      "componentName": "page",
+      "slots": {
+        "body": "$#{hash_3e5a79494da7384647f2c41d535501fbafe420c72a919c0c76dd853b20369c84}\n<h1>This is a nested page</h1>"
+      },
+      "attributes": {},
+      "custom_attributes": {}
+    }
+  },
+  "i18n": {},
+  "above_the_fold": {
+    "own_candidates": [
+      "flex",
+      "button-primary"
+    ],
+    "external_refs": []
+  }
+}

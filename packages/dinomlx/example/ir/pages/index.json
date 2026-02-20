@@ -1,5 +1,5 @@
 {
-  "data":{
+  "data": {
     "hash_index": {
       "slots": {
         "head": "<title>$i18n#{hash_title}</title>",
@@ -8,7 +8,7 @@
       "attributes": {},
       "custom_attributes": {}
     },
-    "hash_atoms_primary_button":{
+    "hash_atoms_primary_button": {
       "attributes": {
         "id": "click-me"
       },

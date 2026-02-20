@@ -1,0 +1,26 @@
+{
+  "data": {
+    "hash_55e939af393006865dcdda3f71b03b80c8107b0691767ca70dd748eb35c4753d": {
+      "componentName": "basic-layout",
+      "slots": {
+        "head": "\n    <title>\n      My example\n    </title>\n  ",
+        "body": "\n    <c-above-the-fold/>\n  "
+      },
+      "attributes": {},
+      "custom_attributes": {}
+    },
+    "hash_index_747793339c6da766bd7aa37382447f5ebac7c6f2f03de10da30de7971ed18d8b": {
+      "componentName": "page",
+      "slots": {
+        "body": "$#{hash_55e939af393006865dcdda3f71b03b80c8107b0691767ca70dd748eb35c4753d}\n"
+      },
+      "attributes": {},
+      "custom_attributes": {}
+    }
+  },
+  "i18n": {},
+  "above_the_fold": {
+    "own_candidates": [],
+    "external_refs": []
+  }
+}

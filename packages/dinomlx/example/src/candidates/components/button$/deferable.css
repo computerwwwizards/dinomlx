@@ -1,7 +1,7 @@
-[class^="button"]:disabled{
+[class^="button"]:disabled {
   cursor: not-allowed;
 }
 
-[class^="button"]{
+[class^="button"] {
   cursor: pointer;
 }
