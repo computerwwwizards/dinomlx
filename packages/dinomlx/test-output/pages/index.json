@@ -1,0 +1,35 @@
+{
+  "data": {
+    "hash_atoms_button-primary_nma2q": {
+      "attributes": {
+        "id": "click-me"
+      },
+      "custom_attributes": {},
+      "slots": {
+        "default": "\n      Click Me\n    "
+      }
+    },
+    "hash_index": {
+      "attributes": {},
+      "custom_attributes": {},
+      "slots": {
+        "head": "\n    <title>\n      $i18n#{hash_title}\n    </title>\n  ",
+        "body": "\n    \n    $#{hash_atoms_button-primary_nma2q}\n    $i18n#{hash_click}\n  "
+      }
+    }
+  },
+  "i18n": {
+    "hash_title": {
+      "spanish": "Principal",
+      "english": "Home"
+    },
+    "hash_click": {
+      "spanish": "Hazme Click",
+      "english": "Click me again"
+    }
+  },
+  "above_the_fold": {
+    "own_candidates": [],
+    "external_refs": ""
+  }
+}
